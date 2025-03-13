@@ -213,11 +213,11 @@ availability.ticketmaster.<REGION_CODE>/api/v2/TM_<COUNTRY_CODE>/availability/<E
 
 ## Subdomains
 
-www.ticketmaster.co.uk
-availability.ticketmaster.pl
-queue.ticketmaster.eu
-identity.ticketmaster.ae
-help.ticketmaster.eu
+- www.ticketmaster.co.uk
+- availability.ticketmaster.pl
+- queue.ticketmaster.eu
+- identity.ticketmaster.ae
+- help.ticketmaster.eu
 
 # Error logs
 
