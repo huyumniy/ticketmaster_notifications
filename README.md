@@ -240,11 +240,11 @@ create google sheets with following attributes:
 |PROXY|Used to connect selenium browser to proxy or vpn VeePN|String: "host:port:login:password", String: "vpn"|No|
 
 ## Google Sheets configuration sample
-![spreadsheets config sample](samples/spreadsheets_config_sample.PNG)
+![spreadsheets config sample](samples/spreadsheets_config_sample.png)
 
 # Slack message sample
 
-![slack message sample](samples/slack_message_sample.PNG)
+![slack message sample](samples/slack_message_sample.png)
 
 # Testing
 
