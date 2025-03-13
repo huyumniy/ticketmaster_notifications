@@ -1,0 +1,10 @@
+Lib
+bin
+Include
+Scripts
+Server/db.sqlite3
+Server/api/__pycache__
+pyvenv.cfg
+slack-post/pyvenv.cfg
+slack-post/slack_token.json
+Utils/__pycache__

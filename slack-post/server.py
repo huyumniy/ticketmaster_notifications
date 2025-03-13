@@ -1,47 +1,53 @@
-from flask import Flask, request, Response 
+from flask import Flask, request, jsonify
 from slack_sdk import WebClient
-from slackeventsapi import SlackEventAdapter
-from slack_sdk.errors import SlackApiError
-import sys, os
-import requests
+import os
+import json
 
 app = Flask(__name__)
-to_run = True
-# Set up Slack API client
-slack_token = "xoxb-773919780944-6545227300720-mTgMldXEyDqgieEMPTN75tPf"
-slack_signing_secret = '89686c150358a5bd66fdd4030011b884'
-client = WebClient(token=slack_token)
-slack_events_adapter = SlackEventAdapter(slack_signing_secret, "/slack/events", app)
 
-# Stops the 
-@app.route('/stop', methods=['POST'])
-def stop_server():
-    print("Received stop request. Stopping server...")
-    global to_run
-    to_run = False
-    return "Sever stopped!"
+# Load Slack token from JSON file
+json_file = os.path.join(os.getcwd(), "slack_token.json")
+try:
+    slack_token = json.load(open(json_file)).get("token")
+    if not slack_token:
+        raise ValueError("Token not found.")
+    print("Slack token loaded.")
+except (FileNotFoundError, json.JSONDecodeError, ValueError) as e:
+    print(f"Error loading token: {e}")
+    slack_token = None
 
-
-@app.route('/start', methods=['POST'])
-def start_server():
-    print("Received start request. Starting server...")
-    global to_run
-    to_run = True
-    return "Server started!"
+# Initialize Slack client
+client = WebClient(token=slack_token) if slack_token else None
 
 
 @app.route('/book', methods=['POST'])
 def receive_message():
-    if to_run:
-        send_to_group_channel(request.json['url'])
+    """Handles incoming requests and sends notifications to Slack."""
+    data = request.json.get("url")
+    if not data:
+        return jsonify({"error": "Missing URL"}), 400
+
+    if send_to_group_channel(data):
+        return jsonify({"message": "Notification sent"}), 200
+    return jsonify({"error": "Failed to send message"}), 500
 
 
-def send_to_group_channel(data):
-    client.chat_postMessage(
-        channel="#ticketmaster-notifications",
-        text=f"З'явилась нові квитки!" + f"\n*url:* {data}",
-        parse="mrkdwn"
-    )
+def send_to_group_channel(url):
+    """Sends a message to the Slack channel."""
+    if not client:
+        print("Slack client not initialized.")
+        return False
+    try:
+        client.chat_postMessage(
+            channel="#ticketmaster-notifications",
+            text=f"З'явились нові квитки!\n*URL:* {url}",
+            parse="mrkdwn"
+        )
+        return True
+    except Exception as e:
+        print(f"Error sending message: {e}")
+        return False
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=4040)

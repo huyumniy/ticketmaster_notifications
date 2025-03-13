@@ -1,110 +1,108 @@
 {
 "update_url": "https://clients2.google.com/service/update2/crx",
 
-  "name": "__MSG_appName__",
-  "description": "__MSG_appDesc__",
-  "default_locale": "en",
-  "version": "4.8.0",
-  "homepage_url": "https://www.urban-vpn.com/",
   "manifest_version": 3,
+  "name": "__MSG_app_name_chrome__",
+  "description": "__MSG_app_description__",
+  "version": "3.4.0",
+  "default_locale": "en",
+  "icons": {
+    "16": "icons/16.png",
+    "32": "icons/32.png",
+    "48": "icons/48.png",
+    "64": "icons/64.png",
+    "128": "icons/128.png"
+  },
+  "homepage_url": "https://veepn.com/",
+  "minimum_chrome_version": "109",
+  "background": {
+    "service_worker": "service-worker-loader.js",
+    "type": "module"
+  },
   "action": {
-    "default_icon": "icons/icon-grey.png",
-    "default_title": "Urban VPN",
-    "default_popup": "popup/index.html"
+    "default_title": "__MSG_app_name_chrome__",
+    "default_popup": "src/popup/popup.html",
+    "default_icon": {
+      "16": "icons/16-grey.png",
+      "32": "icons/32-grey.png",
+      "48": "icons/48-grey.png",
+      "64": "icons/64-grey.png",
+      "128": "icons/128-grey.png"
+    }
+  },
+  "permissions": [
+    "storage",
+    "proxy",
+    "tabs",
+    "cookies",
+    "notifications",
+    "webRequest",
+    "webRequestAuthProvider",
+    "privacy",
+    "management"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
   },
   "content_scripts": [
     {
-      "matches": [
-        "https://*/*",
-        "http://*/*"
-      ],
       "js": [
-        "ad-blocker/content.js"
+        "assets/main.tsx-loader-BkHRwrvu.js"
       ],
-      "run_at": "document_start",
-      "all_frames": true,
-      "match_about_blank": true
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
     },
     {
-      "matches": [
-        "https://*/*",
-        "http://*/*"
-      ],
       "js": [
-        "content/content.js"
+        "assets/main.tsx-loader-BMwUcGX5.js"
       ],
-      "run_at": "document_start"
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "https://*.veepn.com/*"
+      ]
     }
-  ],
-  "icons": {
-    "16": "icons/icon.png",
-    "48": "icons/icon-48.png",
-    "128": "icons/icon-128.png"
-  },
-  "permissions": [
-    "webRequestAuthProvider",
-    "offscreen",
-    "alarms",
-    "management",
-    "proxy",
-    "scripting",
-    "storage",
-    "tabs",
-    "webNavigation",
-    "webRequest"
   ],
   "web_accessible_resources": [
     {
-      "resources": [
-        "/content/anti-male-ware-notification/index.html",
-        "/content/safe-price-check-notification/index.html",
-        "/content/vpn-notification/index.html",
-        "/content/consent-reminder-notification/index.html",
-        "/content/terminated-connection-notification/index.html"
-      ],
-      "matches": [
-        "<all_urls>"
-      ]
-    },
-    {
-      "resources": [
-        "/content/location/location.js"
-      ],
-      "matches": [
-        "https://*/*",
-        "http://*/*"
-      ]
-    },
-    {
-      "resources": [
-        "/libs/extend-native-history-api.js",
-        "/libs/requests.js"
-      ],
-      "matches": [
-        "<all_urls>"
-      ]
-    },
-    {
-      "resources": [
-        "executers/fr-co.js",
-        "executers/vi-ig-tr.js",
-        "executers/vi-oo-tr.js",
-        "executers/vi-pn-tr.js",
-        "executers/vi-rd-tr.js",
-        "executers/vi-tr.js",
-        "executers/vi-tt-tr.js"
-      ],
       "matches": [
         "*://*/*"
-      ]
+      ],
+      "resources": [
+        "fonts/FigtreeVF.woff2"
+      ],
+      "use_dynamic_url": false
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "resources": [
+        "assets/x-close-cross-DFy6If8L.svg",
+        "assets/logo-veepn-DbnXwVk8.svg",
+        "assets/account-hijacked-BBvvqP8b.svg",
+        "assets/compromised-password-vxxeRtFM.svg",
+        "assets/data-leak-D-kVRZ4w.svg",
+        "assets/public-document-B_twLPLq.svg",
+        "assets/client-BELrBlEC.js",
+        "assets/index-Cmg072g4.js",
+        "assets/webcomponents-bundle-CAO5xEtU.js",
+        "assets/main.tsx-Bl_dMrot.js",
+        "assets/icon-logo-BMFBtERK.svg",
+        "assets/icon-fire-Dj1F5-_M.svg",
+        "assets/lines-short-l6aq7GhZ.svg",
+        "assets/lines-long-D9t9MD6m.svg",
+        "assets/main.tsx-C_Bz2Eeo.js"
+      ],
+      "use_dynamic_url": false
     }
-  ],
-  "host_permissions": [
-    "<all_urls>",
-    "https://*.bugsnag.com/*"
-  ],
-  "background": {
-    "service_worker": "service-worker/index.js"
-  },
-  "minimum_chrome_version": "109.0"
+  ]
 }
