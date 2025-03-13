@@ -1,6 +1,6 @@
 @echo off
 
-set "project_dir=..\ticketmaster_notifications-main"
+set "project_dir=..\ticketmaster_notifications-notificator"
 set "venv_dir=%project_dir%"
 
 rem Create virtual environment
